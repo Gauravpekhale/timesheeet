@@ -8,17 +8,12 @@ app.use(bodyParser.json());
 app.get("/api/Script", async (req, res) => {
 	const { username, password } = req.query;
 
-	try {
-		let baseurl = "https://prod-usermgmt-api.huhoka.com";
-		let endpoint = "/api/User/LogIn";
+		try {
+		let baseUrl = "https://prod-sts.huhoka.com/api/Manage/GenerateTokenForUser?"
+		let endpoint = "username=akhil.gampa@centralogic.net"
 
-		const loginRequest = {
-			UserName: username,
-			Password: password,
-		};
-
-		const loginResponse = await makePostRequest(baseurl, endpoint, loginRequest);
-		const accessToken = loginResponse.access_token;
+		const response = await fetch(baseUrl + endpoint);
+		const accessToken = await response.text();
 
 		baseurl = "https://prod-shiftattendance-api.huhoka.com";
 		endpoint = "/api/Shift/CheckInShift";
@@ -46,28 +41,28 @@ app.get("/api/Script", async (req, res) => {
 		let projectName = "";
 		let projectUId = "";
 		let MeetingTask = [];
-		if (username.toLowerCase() === "gaurav.pekhale@centralogic.net") {
-			projectName = "EXP Document AI";
-			projectUId = "e0fa113c-e7ca-4cc4-a1f9-23b19b4c8c85";
-			MeetingTask.push({
-				projectUId: "e0fa113c-e7ca-4cc4-a1f9-23b19b4c8c85",
-				taskUId: "",
-				projectName: "EXP Document AI",
-				tasks: "Daily Standup Call with Celia",
-				type: "Free Task",
-				from: "19:30",
-				to: "20:00",
-			});
-			MeetingTask.push({
-				projectUId: "e0fa113c-e7ca-4cc4-a1f9-23b19b4c8c85",
-				taskUId: "",
-				projectName: "EXP Document AI",
-				tasks: "Task Center And Document AI Dev Interaction Call",
-				type: "Free Task",
-				from: "20:00",
-				to: "20:30",
-			});
-		}
+		// if (username.toLowerCase() === "gaurav.pekhale@centralogic.net") {
+		// 	projectName = "EXP Document AI";
+		// 	projectUId = "e0fa113c-e7ca-4cc4-a1f9-23b19b4c8c85";
+		// 	MeetingTask.push({
+		// 		projectUId: "e0fa113c-e7ca-4cc4-a1f9-23b19b4c8c85",
+		// 		taskUId: "",
+		// 		projectName: "EXP Document AI",
+		// 		tasks: "Daily Standup Call with Celia",
+		// 		type: "Free Task",
+		// 		from: "19:30",
+		// 		to: "20:00",
+		// 	});
+		// 	MeetingTask.push({
+		// 		projectUId: "e0fa113c-e7ca-4cc4-a1f9-23b19b4c8c85",
+		// 		taskUId: "",
+		// 		projectName: "EXP Document AI",
+		// 		tasks: "Task Center And Document AI Dev Interaction Call",
+		// 		type: "Free Task",
+		// 		from: "20:00",
+		// 		to: "20:30",
+		// 	});
+		// }
 
 		timesheetModel.taskSlots.push(
 			{
